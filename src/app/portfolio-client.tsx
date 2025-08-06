@@ -39,7 +39,7 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
     <div className="bg-white text-black min-h-screen">
       <header className="sticky top-0 z-50 flex justify-between items-end px-6 pt-20 bg-white max-w-[1600px] mx-auto">
         <div className="text-3xl font-serif tracking-wide">Richard Quintero</div>
-        <nav className="space-x-8 text-sm uppercase tracking-wide">
+        <nav className="flex flex-col items-end space-y-2 text-sm uppercase tracking-wide text-right">
           <button onClick={() => setView('photos')} className="hover:opacity-60">
             PHOTOGRAPHY
           </button>
