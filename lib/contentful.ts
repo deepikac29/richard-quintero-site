@@ -16,7 +16,6 @@ export type VideoProject = {
   poster: string;
 };
 
-// Minimal asset type (no any)
 type ContentfulFile = {
   fields: {
     file: { url: string };
@@ -41,7 +40,7 @@ export async function getPhotoProjects(): Promise<PhotoProject[]> {
         images: fields.images.map((asset) => `https:${asset.fields.file.url}`),
       };
     });
-  } catch (error) {
+  } catch {
     console.log("Photo projects not found in Contentful, using mock data");
     return [];
   }
@@ -67,7 +66,7 @@ export async function getVideoProjects(): Promise<VideoProject[]> {
         poster: `https:${fields.poster.fields.file.url}`,
       };
     });
-  } catch (error) {
+  } catch {
     console.log("Video projects not found in Contentful, using mock data");
     return [];
   }

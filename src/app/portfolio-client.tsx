@@ -116,7 +116,6 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
           controller={{
             closeOnBackdropClick: true,
             closeOnPullDown: true,
-            closeOnEsc: true,
           }}
           render={{
             slide: ({ slide }) => (
