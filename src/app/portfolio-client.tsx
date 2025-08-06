@@ -7,7 +7,7 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Masonry from 'react-masonry-css';
-import { FaGithub, FaLinkedin, FaYoutube, FaInstagram, FaSun, FaMoon, FaHome } from 'react-icons/fa';
+import { FaLinkedin, FaYoutube, FaInstagram, FaSun, FaMoon, FaHome } from 'react-icons/fa';
 
 
 import { PhotoProject, VideoProject } from '../../lib/contentful';
@@ -46,25 +46,33 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
   const photoItems = photoProjects.flatMap(p =>
     p.images.map((src, i) => ({ src, project: p, index: i }))
   );
-  const cols = { default: 4, 1600: 3, 1200: 2, 900: 1 };
+  const cols = {
+    default: 5, // Desktop
+    1024: 4,
+    768: 3      // Mobile and small screens
+  };
 
   return (
     <div className="bg-white text-black min-h-screen dark:bg-black dark:text-white">
-      <header className="sticky top-0 z-50 flex justify-between items-end px-6 pt-20 pb-8 bg-white dark:bg-black max-w-[1600px] mx-auto">
-        <div className="text-3xl font-serif tracking-wide">Richard Quintero</div>
-        <nav className="space-x-8 text-sm uppercase tracking-wide">
-          <button
-            onClick={() => setView('photos')}
-            className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full">
-            PHOTOGRAPHY
-          </button>
-          <button
-            onClick={() => setView('videos')}
-            className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full">
-            VIDEOS
-          </button>
-        </nav>
-      </header>
+      <header className="sticky top-0 z-50 flex flex-col sm:flex-row sm:justify-between sm:items-end items-start gap-2 px-6 pt-20 pb-8 bg-white dark:bg-black max-w-[1600px] mx-auto">
+  <div className="text-3xl font-serif tracking-wide">Richard Quintero</div>
+  <nav className="flex space-x-8 text-sm uppercase tracking-wide">
+    <button
+      onClick={() => setView('photos')}
+      className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+    >
+      PHOTOGRAPHY
+    </button>
+    <button
+      onClick={() => setView('videos')}
+      className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+    >
+      VIDEOS
+    </button>
+  </nav>
+</header>
+
+
 
       <main className="max-w-[1600px] mx-auto px-6 pt-8 pb-16">
         {view === 'photos' && (
@@ -196,25 +204,25 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
       `}</style>
 
 
-<div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-black/50 backdrop-blur-md shadow-lg border border-neutral-200 dark:border-neutral-800 px-6 py-3 rounded-full flex items-center gap-6 z-50">
-<a href="https://github.com" target="_blank" rel="noopener noreferrer">
-  <FaGithub className="w-5 h-5 text-black dark:text-white" />
-</a>
-<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-  <FaLinkedin className="w-5 h-5 text-black dark:text-white" />
-</a>
-<a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-  <FaYoutube className="w-5 h-5 text-black dark:text-white" />
-</a>
-<a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-  <FaInstagram className="w-5 h-5 text-black dark:text-white" />
-</a>
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-black/50 backdrop-blur-md shadow-lg border border-neutral-200 dark:border-neutral-800 px-6 py-3 rounded-full flex items-center gap-6 z-50">
+        <a href="https://richard-quintero-site.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <FaHome className="w-5 h-5 text-black dark:text-white" />
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <FaLinkedin className="w-5 h-5 text-black dark:text-white" />
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+          <FaYoutube className="w-5 h-5 text-black dark:text-white" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <FaInstagram className="w-5 h-5 text-black dark:text-white" />
+        </a>
 
-<button onClick={() => setIsDark(!isDark)}>
-  {isDark ? <FaSun className="w-5 h-5 text-white" /> : <FaMoon className="w-5 h-5 text-black" />}
-</button>
+        <button onClick={() => setIsDark(!isDark)}>
+          {isDark ? <FaSun className="w-5 h-5 text-white" /> : <FaMoon className="w-5 h-5 text-black" />}
+        </button>
 
-</div>
+      </div>
 
     </div>
   );
