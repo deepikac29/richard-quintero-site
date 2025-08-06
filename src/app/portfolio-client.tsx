@@ -7,14 +7,8 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Masonry from 'react-masonry-css';
-import {
-  Github,
-  Linkedin,
-  Youtube,
-  Sun,
-  Moon,
-  Home,
-} from 'lucide-react';
+import { FaGithub, FaLinkedin, FaYoutube, FaInstagram, FaSun, FaMoon, FaHome } from 'react-icons/fa';
+
 
 import { PhotoProject, VideoProject } from '../../lib/contentful';
 
@@ -203,27 +197,23 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
 
 
 <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-black/50 backdrop-blur-md shadow-lg border border-neutral-200 dark:border-neutral-800 px-6 py-3 rounded-full flex items-center gap-6 z-50">
-  <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer">
-    <Home className="w-5 h-5 text-black dark:text-white" />
-  </a>
-  <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-    <Github className="w-5 h-5 text-black dark:text-white" />
-  </a>
-  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-    <Linkedin className="w-5 h-5 text-black dark:text-white" />
-  </a>
-  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-    <Youtube className="w-5 h-5 text-black dark:text-white" />
-  </a>
+<a href="https://github.com" target="_blank" rel="noopener noreferrer">
+  <FaGithub className="w-5 h-5 text-black dark:text-white" />
+</a>
+<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+  <FaLinkedin className="w-5 h-5 text-black dark:text-white" />
+</a>
+<a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+  <FaYoutube className="w-5 h-5 text-black dark:text-white" />
+</a>
+<a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+  <FaInstagram className="w-5 h-5 text-black dark:text-white" />
+</a>
 
-  {/* Theme toggle */}
-  <button onClick={() => setIsDark(!isDark)}>
-    {isDark ? (
-      <Sun className="w-5 h-5 text-white" />
-    ) : (
-      <Moon className="w-5 h-5 text-black" />
-    )}
-  </button>
+<button onClick={() => setIsDark(!isDark)}>
+  {isDark ? <FaSun className="w-5 h-5 text-white" /> : <FaMoon className="w-5 h-5 text-black" />}
+</button>
+
 </div>
 
     </div>
