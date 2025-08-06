@@ -7,7 +7,7 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Masonry from 'react-masonry-css';
-import TestComponent from './test';
+
 import { PhotoProject, VideoProject } from '../../lib/contentful';
 
 interface PortfolioClientProps {
