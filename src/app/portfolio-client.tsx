@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Lightbox from 'yet-another-react-lightbox';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
@@ -8,7 +8,6 @@ import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Masonry from 'react-masonry-css';
 import { FaLinkedin, FaYoutube, FaInstagram, FaSun, FaMoon, FaHome } from 'react-icons/fa';
-
 
 import { PhotoProject, VideoProject } from '../../lib/contentful';
 
@@ -33,7 +32,6 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
     document.documentElement.classList.toggle('dark', isDark);
   }, [isDark]);
 
-
   const openLightbox = (proj: PhotoProject, idx: number) => {
     setSlides(proj.images.map(src => ({ src, title: proj.title })));
     setCurrentIndex(idx);
@@ -41,11 +39,23 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
     setLightboxOpen(true);
   };
 
-  
-  
   const photoItems = photoProjects.flatMap(p =>
     p.images.map((src, i) => ({ src, project: p, index: i }))
   );
+
+  // State to track if component has mounted (client-side only)
+  const [hasMounted, setHasMounted] = useState(false);
+  const [shuffledItems, setShuffledItems] = useState(photoItems);
+
+  useEffect(() => {
+    setHasMounted(true);
+    // Only shuffle once when component mounts on client
+    setShuffledItems([...photoItems].sort(() => Math.random() - 0.5));
+  }, []);
+
+  // Use shuffled items only after mounting, otherwise use original order
+  const displayItems = hasMounted ? shuffledItems : photoItems;
+
   const cols = {
     default: 5, // Desktop
     1024: 4,
@@ -72,24 +82,23 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
         </nav>
       </header>
 
-
-
       <main className="max-w-[1600px] mx-auto px-6 pt-8 pb-16">
         {view === 'photos' && (
-          <Masonry
-            breakpointCols={cols}
-            className="flex -ml-4"
-            columnClassName="pl-4 flex flex-col gap-4"
-          >
-            {photoItems.map(({ src, project, index }) => (
+          <div className={`transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
+            <Masonry
+              breakpointCols={cols}
+              className="flex -ml-4"
+              columnClassName="pl-4 flex flex-col gap-4"
+            >
+            {displayItems.map(({ src, project, index }, displayIndex) => (
               <div
-                key={`${project.title}-${index}`}
+                key={`${project.title}-${index}-${displayIndex}`}
                 className="relative cursor-pointer group animate-fadeIn"
                 onClick={() => openLightbox(project, index)}
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   setHoverPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-                  setHoveredIndex(index);
+                  setHoveredIndex(displayIndex);
                 }}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -98,12 +107,13 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
                   alt={project.title}
                   width={600}
                   height={800}
+                  loading="lazy"
                   className="rounded-sm object-cover"
                 />
 
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black/50 dark:bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {hoveredIndex === index && (
+                <div className="absolute inset-0 bg-black/70 dark:bg-white/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {hoveredIndex === displayIndex && (
                     <div
                       className="absolute pointer-events-none transition-all duration-150 ease-out"
                       style={{
@@ -123,7 +133,8 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
                 </div>
               </div>
             ))}
-          </Masonry>
+                      </Masonry>
+          </div>
         )}
 
         {view === 'videos' && (
@@ -178,6 +189,7 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
                     alt=""
                     width={1200}
                     height={800}
+                    loading="lazy"
                     className="object-contain max-h-[80vh]"
                   />
                 </div>
@@ -203,7 +215,6 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
         }
       `}</style>
 
-
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-black/50 backdrop-blur-md shadow-lg border border-neutral-200 dark:border-neutral-800 px-6 py-3 rounded-full flex items-center gap-6 z-50">
         <a href="https://richard-quintero-site.vercel.app/" target="_blank" rel="noopener noreferrer">
           <FaHome className="w-5 h-5 text-black dark:text-white" />
@@ -217,13 +228,10 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
           <FaInstagram className="w-5 h-5 text-black dark:text-white" />
         </a>
-
         <button onClick={() => setIsDark(!isDark)}>
           {isDark ? <FaSun className="w-5 h-5 text-white" /> : <FaMoon className="w-5 h-5 text-black" />}
         </button>
-
       </div>
-
     </div>
   );
 }
