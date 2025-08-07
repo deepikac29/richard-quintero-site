@@ -55,22 +55,22 @@ export default function PortfolioClient({ photoProjects, videoProjects }: Portfo
   return (
     <div className="bg-white text-black min-h-screen dark:bg-black dark:text-white">
       <header className="sticky top-0 z-50 flex flex-col sm:flex-row sm:justify-between sm:items-end items-start gap-2 px-6 pt-20 pb-8 bg-white dark:bg-black max-w-[1600px] mx-auto">
-  <div className="text-3xl font-serif tracking-wide">Richard Quintero</div>
-  <nav className="flex space-x-8 text-sm uppercase tracking-wide">
-    <button
-      onClick={() => setView('photos')}
-      className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-    >
-      PHOTOGRAPHY
-    </button>
-    <button
-      onClick={() => setView('videos')}
-      className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-    >
-      VIDEOS
-    </button>
-  </nav>
-</header>
+        <div className="text-3xl font-serif tracking-wide">Richard Quintero</div>
+        <nav className="flex space-x-8 text-sm uppercase tracking-wide">
+          <button
+            onClick={() => setView('photos')}
+            className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+          >
+            PHOTOGRAPHY
+          </button>
+          <button
+            onClick={() => setView('videos')}
+            className="relative hover:opacity-100 after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+          >
+            VIDEOS
+          </button>
+        </nav>
+      </header>
 
 
 
